@@ -2,6 +2,7 @@
 @{
     var applicationName = ConfigurationManager.AppSettings["ApplicationName"];
     var applicationVersion = ConfigurationManager.AppSettings["ApplicationVerion"];
+    var developedBy = ConfigurationManager.AppSettings["DevelopedBy"];
 }
 
 <!DOCTYPE html>
@@ -48,7 +49,7 @@
     <footer>
         <hr class="hr-layout" />
         <div class="float-left">
-            <p>&copy; @DateTime.Now.Year - @applicationName by Multiline Engineers (Version @applicationVersion).</p>
+            <p>&copy; @DateTime.Now.Year - @developedBy (Version @applicationVersion).</p>
         </div>
     </footer>
 
