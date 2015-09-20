@@ -177,14 +177,14 @@ namespace CAAssistant.Controllers
 
                 selectedRole = selectedRole ?? new string[] { };
 
-                var result = await UserManager.AddUserToRolesAsync(user.Id, selectedRole.Except(userRoles).ToList<string>());
+                var result = await UserManager.AddUserToRolesAsync(user.Id, selectedRole.Except(userRoles).ToList());
 
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
                     return View();
                 }
-                result = await UserManager.RemoveUserFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToList<string>());
+                result = await UserManager.RemoveUserFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToList());
 
                 if (!result.Succeeded)
                 {

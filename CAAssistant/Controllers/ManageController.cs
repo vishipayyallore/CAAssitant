@@ -117,7 +117,7 @@ namespace CAAssistant.Controllers
 
         //
         // GET: /Manage/EnableTFA
-        public async Task<ActionResult> EnableTFA()
+        public async Task<ActionResult> EnableTfa()
         {
             await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), true);
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -130,7 +130,7 @@ namespace CAAssistant.Controllers
 
         //
         // GET: /Manage/DisableTFA
-        public async Task<ActionResult> DisableTFA()
+        public async Task<ActionResult> DisableTfa()
         {
             await UserManager.SetTwoFactorEnabledAsync(User.Identity.GetUserId(), false);
             var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -374,15 +374,15 @@ namespace CAAssistant.Controllers
             return false;
         }
 
-        private bool HasPhoneNumber()
-        {
-            var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
-        }
+        //private bool HasPhoneNumber()
+        //{
+        //    var user = UserManager.FindById(User.Identity.GetUserId());
+        //    if (user != null)
+        //    {
+        //        return user.PhoneNumber != null;
+        //    }
+        //    return false;
+        //}
 
         public enum ManageMessageId
         {

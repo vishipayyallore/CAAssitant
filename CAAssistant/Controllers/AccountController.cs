@@ -47,14 +47,7 @@ namespace CAAssistant.Controllers
 
         private SignInHelper SignInHelper
         {
-            get
-            {
-                if (_helper == null)
-                {
-                    _helper = new SignInHelper(UserManager, AuthenticationManager);
-                }
-                return _helper;
-            }
+            get { return _helper ?? (_helper = new SignInHelper(UserManager, AuthenticationManager)); }
         }
 
         //
@@ -80,7 +73,6 @@ namespace CAAssistant.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
-                case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
@@ -125,7 +117,6 @@ namespace CAAssistant.Controllers
                     return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
@@ -154,7 +145,8 @@ namespace CAAssistant.Controllers
                 if (result.Succeeded)
                 {
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    if (Request.Url == null) return View("DisplayEmail");
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
                     await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     ViewBag.Link = callbackUrl;
                     return View("DisplayEmail");
@@ -199,24 +191,22 @@ namespace CAAssistant.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View(model);
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
-                }
-
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                ViewBag.Link = callbackUrl;
+                // Don't reveal that the user does not exist or is not confirmed
                 return View("ForgotPasswordConfirmation");
             }
 
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            if (Request.Url == null) return View("ForgotPasswordConfirmation");
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, protocol: Request.Url.Scheme);
+            await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+            ViewBag.Link = callbackUrl;
+            return View("ForgotPasswordConfirmation");
+
             // If we got this far, something failed, redisplay form
-            return View(model);
         }
 
         //
@@ -312,7 +302,7 @@ namespace CAAssistant.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl });
         }
 
         //
@@ -336,7 +326,6 @@ namespace CAAssistant.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresTwoFactorAuthentication:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
-                case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;

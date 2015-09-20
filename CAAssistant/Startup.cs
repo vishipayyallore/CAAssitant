@@ -1,7 +1,8 @@
-﻿using Microsoft.Owin;
+﻿using CAAssistant;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(CAAssistant.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
 namespace CAAssistant
 {
     public partial class Startup

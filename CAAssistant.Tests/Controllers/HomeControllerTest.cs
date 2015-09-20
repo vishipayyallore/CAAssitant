@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CAAssistant;
+﻿using System.Web.Mvc;
 using CAAssistant.Controllers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CAAssistant.Tests.Controllers
 {
@@ -29,13 +24,13 @@ namespace CAAssistant.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController();
+            var controller = new HomeController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            var result = controller.About() as ViewResult;
 
             // Assert
-            Assert.AreEqual("Your application description page.", result.ViewBag.Message);
+            if (result != null) Assert.AreEqual("Your application description page.", result.ViewBag.Message);
         }
 
         [TestMethod]
