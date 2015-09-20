@@ -279,8 +279,9 @@
     <Content Include="Views\Manage\RemoveLogin.cshtml" />
     <Content Include="Views\Client\Index.cshtml" />
     <Content Include="Views\ClientFiles\Index.cshtml" />
-    <Content Include="Views\ClientFiles\View.cshtml" />
     <Content Include="Views\ClientFiles\Create.cshtml" />
+    <Content Include="Views\ClientFiles\Details.cshtml" />
+    <Content Include="Views\ClientFiles\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

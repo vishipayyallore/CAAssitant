@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CAAssistant.DataStore;
 using CAAssistant.Models;
 using Microsoft.AspNet.Identity;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CAAssistant.Controllers
@@ -47,19 +48,50 @@ namespace CAAssistant.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public ActionResult Details(string id)
         {
-            throw new NotImplementedException();
+            var clientFile = GetClientFile(id);
+            return View(clientFile);
+        }
+
+        private ClientFile GetClientFile(string id)
+        {
+            var filter = Builders<ClientFile>.Filter.Eq("_id", new ObjectId(id));
+            var clientFile = _assistantContext.ClientFiles.Find(filter).FirstOrDefaultAsync().Result;
+            return clientFile;
         }
 
         public ActionResult Edit(string id)
         {
-            throw new NotImplementedException();
+            var clientFile = GetClientFile(id);
+            var clientFileView = new ClientFileViewModel(clientFile);
+            return View(clientFileView);
         }
+
+        [HttpPost]
+        public ActionResult Edit(ClientFileViewModel clientFileView)
+        {
+            var filter = Builders<ClientFile>.Filter.Eq("_id", new ObjectId(clientFileView.Id));
+            var clientFile = _assistantContext.ClientFiles.Find(filter).FirstOrDefaultAsync().Result;
+            clientFileView.UserName = User.Identity.GetUserName();
+
+            var filestatus = new FileStatusModification
+            {
+                OldStatus = clientFile.FileStatus,
+                NewStatus = clientFileView.FileStatus,
+                Description = "Review",
+                ModifiedBy = clientFileView.UserName
+            };
+            clientFile.AddFileStatus(filestatus);
+
+            var update = Builders<ClientFile>.Update
+                .Set("FileStatusModifications", clientFile.FileStatusModifications)
+                .Set("FileStatus", filestatus.NewStatus);
+            var result = _assistantContext.ClientFiles.UpdateOneAsync(filter, update).Result;
+
+            return RedirectToAction("Index");
+        }
+
     }
 }

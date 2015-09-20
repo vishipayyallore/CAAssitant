@@ -3,6 +3,24 @@
     public class ClientFileViewModel
     {
 
+        public ClientFileViewModel()
+        {
+        }
+
+        public ClientFileViewModel(ClientFile clientFile)
+        {
+            Id = clientFile.Id;
+            FileNumber = clientFile.FileNumber;
+            ClientName = clientFile.ClientName;
+            ClientContactPerson = clientFile.ClientContactPerson;
+            AssociateReponsible = clientFile.AssociateReponsible;
+            CaSign = clientFile.CaSign;
+            DscExpiryDate = clientFile.DscExpiryDate;
+            FileStatus = clientFile.FileStatus;
+        }
+
+        public string Id { get; set; }
+
         public int FileNumber { get; set; }
 
         public string ClientName { get; set; }
