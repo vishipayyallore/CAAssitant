@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAAssistant", "CAAssistant\CAAssistant.csproj", "{EE7DB4BF-BBA9-4851-8854-63000135BF52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CAAssistant.Tests", "CAAssistant.Tests\CAAssistant.Tests.csproj", "{94867E8A-670B-4C6B-B3CB-B945E2FA0BCA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE7DB4BF-BBA9-4851-8854-63000135BF52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE7DB4BF-BBA9-4851-8854-63000135BF52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE7DB4BF-BBA9-4851-8854-63000135BF52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE7DB4BF-BBA9-4851-8854-63000135BF52}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94867E8A-670B-4C6B-B3CB-B945E2FA0BCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94867E8A-670B-4C6B-B3CB-B945E2FA0BCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94867E8A-670B-4C6B-B3CB-B945E2FA0BCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94867E8A-670B-4C6B-B3CB-B945E2FA0BCA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
