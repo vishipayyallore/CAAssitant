@@ -202,6 +202,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\ClientFile.cs" />
+    <Compile Include="Models\ClientFileViewModel.cs" />
     <Compile Include="Models\FileStatusModification.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -279,6 +280,7 @@
     <Content Include="Views\Client\Index.cshtml" />
     <Content Include="Views\ClientFiles\Index.cshtml" />
     <Content Include="Views\ClientFiles\View.cshtml" />
+    <Content Include="Views\ClientFiles\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,6 +9,25 @@ namespace CAAssistant.Models
 
     public class ClientFile
     {
+
+        public ClientFile()
+        {
+        }
+
+        //TODO: User Auto Mapper
+        public ClientFile(ClientFileViewModel clientFileView)
+        {
+            FileNumber = clientFileView.FileNumber;
+            ClientName = clientFileView.ClientName;
+            ClientContactPerson = clientFileView.ClientContactPerson;
+            AssociateReponsible = clientFileView.AssociateReponsible;
+            CaSign = clientFileView.CaSign;
+            DscExpiryDate = clientFileView.DscExpiryDate;
+            FileStatus = clientFileView.FileStatus;
+            FileStatusModifications.Add(clientFileView.InitialFileStatus);
+        }
+
+        #region Properties
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
 
@@ -23,18 +42,22 @@ namespace CAAssistant.Models
 
         public string CaSign{ get; set; }
 
-        public string DscExpired { get; set; }
+        public string DscExpiryDate { get; set; }
 
         public string FileStatus { get; set; }
 
         public List<FileStatusModification> FileStatusModifications = new List<FileStatusModification>();
+        #endregion
 
+        #region Methods.
         public void AddFileStatus(FileStatusModification fileStatusModification)
         {
             FileStatus = fileStatusModification.NewStatus;
             fileStatusModification.ModifiedAt = DateTime.Now.ToString(CultureInfo.InvariantCulture);
             FileStatusModifications.Add(fileStatusModification);
         }
+        #endregion
+
     }
 
 }

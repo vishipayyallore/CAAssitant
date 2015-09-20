@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CAAssistant.DataStore;
 using CAAssistant.Models;
+using Microsoft.AspNet.Identity;
 using MongoDB.Driver;
 
 namespace CAAssistant.Controllers
@@ -24,7 +25,26 @@ namespace CAAssistant.Controllers
 
         public ActionResult Create()
         {
-            throw new NotImplementedException();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(ClientFileViewModel clientFileView)
+        {
+            clientFileView.UserName = User.Identity.GetUserName();
+            clientFileView.InitialFileStatus = new FileStatusModification
+            {
+                OldStatus = "New",
+                NewStatus = "New",
+                Description = "Started",
+                ModifiedBy = clientFileView.UserName
+            };
+
+            var clientFile = new ClientFile(clientFileView);
+
+            _assistantContext.ClientFiles.InsertOneAsync(clientFile).Wait();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(string id)
