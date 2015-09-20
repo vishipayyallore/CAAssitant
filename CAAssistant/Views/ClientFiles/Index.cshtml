@@ -1,0 +1,70 @@
+﻿@model List<CAAssistant.Models.ClientFile>
+
+@{
+    ViewBag.Title = "Client's Audit Files";
+}
+
+<h2>Client's Audit Files</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FileNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].ClientName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].ClientContactPerson)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].AssociateReponsible)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].CaSign)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].DscExpired)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model[0].FileStatus)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClientContactPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AssociateReponsible)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaSign)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DscExpired)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FileStatus)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

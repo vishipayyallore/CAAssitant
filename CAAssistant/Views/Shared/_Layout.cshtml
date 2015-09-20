@@ -34,7 +34,8 @@
                 <ul class="nav navbar-nav">
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Publish Files", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Clients List", "Index", "Client")</li>
+                        <li>@Html.ActionLink("Clients Files", "Index", "ClientFiles")</li>
                     }
                     <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
                 </ul>
